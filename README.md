@@ -8,4 +8,4 @@
   
 ## Running the Elastic Cluster
     cd clusterScripts
-    .\deployCluster.ps1
+    .\deployMainCluster.ps1
