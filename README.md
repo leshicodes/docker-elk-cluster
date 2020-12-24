@@ -9,3 +9,7 @@
 ## Running the Elastic Cluster
     cd clusterScripts
     .\deployMainCluster.ps1
+
+## Cleaning Up our Elastic Cluster
+    cd clusterScripts
+    .\cleanUpCluster.ps1
