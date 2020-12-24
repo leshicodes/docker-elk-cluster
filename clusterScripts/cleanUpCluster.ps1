@@ -1,14 +1,39 @@
-$confirmation = Read-Host "This will remove ALL Docker containers and volumes from your system; Press 'y' to continue"
+$confirmation = Read-Host "This will remove ALL of the Docker containers and volumes created from this project from your system; Press 'y' to continue"
 $esPasswordFile = "elastic-passwords.txt"
+$elasticDockerFile = "elastic-docker-tls.yml"
+
+$esDockerContainers= @("es01", "es02", "es03", "kib01")
+$esDockerVolumes = @("es_certs", "es_data01", "es_data02", "es_data03")
+
 if ($confirmation -eq 'y') {
-    echo "Removing ALL docker containers..."
-    docker rm $(docker ps -aq) --force
+    echo "Removing docker containers..."
+    #docker rm $(docker ps -aq) --force  #not very nice to other docker containers :/
+
+    foreach ($container in $esDockerContainers)
+    {
+        Write-Host "Removing Container: $container"
+        docker rm $container --force
+    }
+
     echo "Removing ALL docker volumes..."
-    docker volume rm $(docker volume ls -q)
+    #docker volume rm $(docker volume ls -q) # again, not very nice. :/
+
+    foreach ($volume in $esDockerVolumes)
+    {
+        Write-Host "Removing Volume: $volume"
+        docker volume rm $volume --force
+    }
+
     if(Test-Path $PSScriptRoot\..\main-cluster\$esPasswordFile)
     {
         echo "Removing elastic password file..."
         rm $PSScriptRoot\..\main-cluster\$esPasswordFile
+    }
+    if(Test-Path "$PSScriptRoot\..\main-cluster\$elasticDockerFile.bak")
+    {
+        echo "Replacing elastic docker file..."
+        rm "$PSScriptRoot\..\main-cluster\$elasticDockerFile"
+        Move-Item "$PSScriptRoot\..\main-cluster\$elasticDockerFile.bak" "$PSScriptRoot\..\main-cluster\$elasticDockerFile"
     }
 }
 else

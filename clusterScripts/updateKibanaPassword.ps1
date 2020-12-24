@@ -16,5 +16,5 @@ $yaml = Get-Content ..\main-cluster\$elasticDockerFile -Raw
 $PSYaml = ConvertFrom-Yaml -Yaml $yaml
 $PSYaml.services.kib01.environment.ELASTICSEARCH_PASSWORD = "$kibPassword"
 ConvertTo-Yaml $PSYaml -OutFile $PSScriptRoot\$elasticDockerFile
-mv ..\main-cluster\$elasticDockerFile "..\main-cluster\$elasticDockerFile.bak"
-mv $PSScriptRoot\$elasticDockerFile ..\main-cluster\$elasticDockerFile
+Move-Item ..\main-cluster\$elasticDockerFile "..\main-cluster\$elasticDockerFile.bak" -Force
+Move-Item $PSScriptRoot\$elasticDockerFile ..\main-cluster\$elasticDockerFile
