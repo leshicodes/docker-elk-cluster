@@ -1,6 +1,6 @@
 $esPasswordFile = "elastic-passwords.txt"
 $esDockerConfigFile = "elastic-docker-tls.yml"
-$secondsToSleep = 15
+$secondsToSleep = 45
 
 cd $PSScriptRoot
 cd ../main-cluster
@@ -15,14 +15,10 @@ docker exec es01 /bin/bash -c "bin/elasticsearch-setup-passwords auto --batch --
 
 docker-compose -f $esDockerConfigFile stop
 
+cls
+. $PSScriptRoot\updateKibanaPassword.ps1
+docker-compose -f $esDockerConfigFile up -d
 
-$confirmation = Read-Host "Please navigate to `"$esDockerConfigFile`" and edit the ELASTICSEARCH_PASSWORD variable under kib01 to the user/pass combination generated in `"$esPasswordFile`"; Press 'y' to continue AFTER this is completed"
-if ($confirmation -eq 'y') {
-    docker-compose -f $esDockerConfigFile up -d
-    cd $PSScriptRoot
-    cd ../
-    exit 0
-}
 cd $PSScriptRoot
 cd ../
 exit 1
