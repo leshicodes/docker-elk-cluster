@@ -2,5 +2,5 @@
 server.name: kibana
 server.host: "0"
 elasticsearch.hosts: [ "http://elasticsearch:9200" ]
-xpack.encryptedSavedObjects.encryptionKey: "49299759947662195409257511778584"
+xpack.encryptedSavedObjects.encryptionKey: "12345678901234567890123456789012"
 #xpack.ingestManager.enabled: true
