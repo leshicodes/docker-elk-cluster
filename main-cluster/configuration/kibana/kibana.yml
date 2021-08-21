@@ -1,6 +1,0 @@
-# Default Kibana configuration for docker target
-server.name: kibana
-server.host: "0"
-elasticsearch.hosts: [ "http://elasticsearch:9200" ]
-xpack.encryptedSavedObjects.encryptionKey: "12345678901234567890123456789012"
-#xpack.ingestManager.enabled: true
